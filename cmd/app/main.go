@@ -1,10 +1,10 @@
 package main
 
 import (
+	"CleanTemplate/internal/config"
 	"CleanTemplate/internal/handlers/httphandler"
 	"CleanTemplate/internal/repositories"
 	"CleanTemplate/internal/services"
-	"CleanTemplate/pkg/config"
 	"CleanTemplate/pkg/httpserver"
 	"CleanTemplate/pkg/logging"
 	"github.com/sirupsen/logrus"
