@@ -48,12 +48,14 @@ func (s *server) Run() error {
 	exit := make(chan os.Signal, 1)
 	signal.Notify(exit, os.Interrupt, syscall.SIGTERM)
 
-	go func() {
+	go func(log *logrus.Logger) {
 		<-exit
-		s.Stop()
-	}()
+		if err := s.Stop(); err != nil {
+			log.Errorf("error occured on server shutting down: %s", err.Error())
+		}
+	}(s.logger)
 
-	s.logger.Info("starting server on port" + s.server.Addr)
+	s.logger.Info("starting server on port", s.server.Addr)
 	err := s.server.ListenAndServe()
 
 	if errors.Is(err, http.ErrServerClosed) {
